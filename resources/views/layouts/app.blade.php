@@ -67,7 +67,7 @@
             @yield('kotakcari')
             <li class="nav-item"><a class="nav-link" href="{{ url('/glosarium') }}">Daftar Kata/Padanan</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">Tentang</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://goo.gl/forms/ImukgcQcGzdqx8SC2">Usulkan Kata/Padanan</a></li>
+            <li class="nav-item"><a class="nav-link" target="_blank" href="https://goo.gl/forms/ImukgcQcGzdqx8SC2">Usulkan Kata/Padanan</a></li>
           <!-- Authentication Links -->
           @guest
           @else
