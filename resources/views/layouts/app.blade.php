@@ -21,9 +21,9 @@
     .navbar .form-control,.navbar .form-control::placeholder,.navbar .input-group-text {
       color: white !important
     }
-    .text-primary, .text-primary a, .section a {
+    /* .text-primary, .text-primary a,{
       color: #17a204 !important;
-    }
+    } */
     .bg-primary, .btn-primary, thead .bg-primary {
       background-color: #17a204 !important
     }
@@ -46,25 +46,25 @@
     }
   </style>
 </head>
-<body class="landing-page">
+<body class="landing-page sidebar-collapse" style="background-image:url({{ asset('img/latar.svg') }})">
     
-  <nav class="navbar navbar-expand-lg fixed-top bg-primary">
+  <nav class="navbar navbar-expand-lg fixed-top bg-primary navbar-transparent" style="background-image:url({{ asset('img/latar.svg') }})">
     <div class="container">
-      <a class="navbar-brand" href="{{ url('/') }}">
-        <img src="{{ asset('img/main-logo.png') }}" alt="" width="128">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="{{ url('/') }}">
+          <img src="{{ asset('img/main-logo.png') }}" alt="" width="128">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <span class="navbar-toggler-bar top-bar"></span>
+            <span class="navbar-toggler-bar middle-bar"></span>
+            <span class="navbar-toggler-bar bottom-bar"></span>
+        </button>
+      </div>
 
-      <div class="collapse navbar-collapse justify-content-end" id="navigation">
-        <!-- Left Side Of Navbar -->
-        <ul class="navbar-nav mr-auto ml-auto">
-          @yield('kotakcari')
-        </ul>
-
+      <div class="collapse navbar-collapse justify-content-end" id="navigation" style='background: rgba(0, 0, 0, 0.0) url({{ asset('img/latar.svg') }}) repeat scroll 0% 0% / cover;'>        
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto">
+            @yield('kotakcari')
             <li class="nav-item"><a class="nav-link" href="{{ url('/glosarium') }}">Daftar Kata/Padanan</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">Tentang</a></li>
             <li class="nav-item"><a class="nav-link" href="https://goo.gl/forms/ImukgcQcGzdqx8SC2">Usulkan Kata/Padanan</a></li>
@@ -97,7 +97,7 @@
 <div class="wrapper">
     {{-- <div class="page-header clear-filter" filter-color="green" > --}}
         {{-- <div class="page-header-image" style="background-image:url({{ asset('img/latar.svg') }})"></div> --}}
-  <div class="section section-about-us" style="min-height:100vh">
+  <div class="section section-about-us" style="min-height:100vh;">
     <div class="container p-3">
       @yield('content')
     </div>
