@@ -15,16 +15,17 @@
                     @endif
 
                     You are logged in!<br><br>
-                    Pilih berkas CSV untuk mulai impor data
+                    Pilih berkas CSV untuk mulai impor data atau klik Tambah untuk menambahkan manual
                     <div class="card-description">
                     <form action="{{ url('glosarium/upload') }}" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-md-6">
                                 <input class="form-control" type="file" name="uploadfile">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Upload CSV">
                             </div>
                             <div class="col-md-6">
-                                <input class="btn btn-primary" type="submit" name="submit" value="Upload CSV">
+                                <button class="btn btn-primary modalMd" type="button" value="{{ action('GlosariumController@create') }}" title="Padanan Kata Baru" data-toggle="modal" data-target="#modalMd">Tambah</button>
                             </div>
                         </div>
                     </form>

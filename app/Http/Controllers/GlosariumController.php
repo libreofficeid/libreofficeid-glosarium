@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Toastr;
 use App\Glosarium;
 use Auth;
 
@@ -34,7 +35,7 @@ class GlosariumController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            return view('glosarium.create');
+            return view('glosarium.create')->renderSections()['content'];
         }
     }
 
@@ -47,16 +48,32 @@ class GlosariumController extends Controller
     public function store(Request $request)
     {
         if (Auth::check()) {
-            // validate input
-            
-            // store to db
+            $validator = \Validator::make($request->all(),
+            [
+                'asal'=>'required|unique:glosarium,source',
+                'padanan'=> 'required',
+            ]);
+            if ($validator->fails())
+            {
+                return response()->json(['errors'=>$validator->errors()->all()]);
+            }
+            $kata = new Glosarium([
+                "source" => $request->get('asal'),
+                "translated" => $request->get('padanan'),
+                "created_by" => Auth::user()->id
+            ]);
+            $kata->save();
+            // Toastr::success('Berhasil menambahkan padanan baru');
+            return response()->json(['status'=>'Berhasil menambahkan padanan baru']);
+            // return redirect()->route('home');
+            // return redirect('/home')->with('status', 'Berhasil menambahkan padanan baru');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $lema
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -74,11 +91,10 @@ class GlosariumController extends Controller
      */
     public function edit($id)
     {
-        // if (Auth::check()) {
+        if (Auth::check()) {
             $data = Glosarium::find($id);
-            // dd($data);
             return view('glosarium.edit',compact('data'))->renderSections()['content'];
-        // }
+        }
     }
 
     /**
@@ -90,7 +106,19 @@ class GlosariumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (Auth::check()) {
+            $request->validate([
+                'asal'=>'required',
+                'padanan'=> 'required',
+              ]);
+            $kata = Glosarium::find($id);
+            $kata->source = $request->get('asal');
+            $kata->translated = $request->get('padanan');
+            $kata->created_by = Auth::user()->id;
+            $kata->save();
+            Toastr::success('Berhasil memperbarui data');
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -103,7 +131,9 @@ class GlosariumController extends Controller
     {
         if(Auth::check()){
             Glosarium::destroy($id);
-            return redirect('/home')->with('status', 'Berhasil menghapus data ');
+            Toastr::success('Berhasil menghapus data');
+            return redirect()->route('home');
+            // return redirect('/home')->with('status', 'Berhasil menghapus data ');
         }
     }
 
@@ -139,8 +169,18 @@ class GlosariumController extends Controller
             $glosarium->save();
             }
         }
-        return redirect('/home')->with('status', 'Berhasil mengimpor data dari CSV!');
+        Toastr::success('Berhasil mengimpor data dari CSV!');
+        return redirect()->route('home');
+        // return redirect('/home')->with('status', 'Berhasil mengimpor data dari CSV!');
 
+    }
+
+    // override pesan validasi
+    public function messages()
+    {
+        return [
+            'unique' => 'Kata asal sudah terdaftar, ',
+        ];
     }
 
 }

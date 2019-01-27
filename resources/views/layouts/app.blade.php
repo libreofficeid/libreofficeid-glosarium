@@ -17,7 +17,11 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/now-ui-kit.css') }}" rel="stylesheet" />
+  <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
   <style media="screen">
+    .toast-top-right{
+      top: 100px
+    }
     .navbar .form-control,.navbar .form-control::placeholder,.navbar .input-group-text {
       color: white !important
     }
@@ -99,7 +103,9 @@
         {{-- <div class="page-header-image" style="background-image:url({{ asset('img/latar.svg') }})"></div> --}}
   <div class="section section-about-us" style="min-height:100vh;">
     <div class="container p-3">
-      @yield('content')
+      <div id="content">
+        @yield('content')
+      </div>
     </div>
   </div>
   <footer class="footer footer-default bg-primary">
@@ -134,6 +140,8 @@
   <script src="{{ asset('js/core/popper.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/core/bootstrap.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/now-ui-kit.js?v=1.2.0') }}" type="text/javascript"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script src="{{ asset('js/ajax-form.js') }}" type="text/javascript"></script>
+  {!! Toastr::render() !!}
 </body>
 </html>
