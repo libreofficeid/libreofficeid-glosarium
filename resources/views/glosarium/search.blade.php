@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    Cari {{ $lema }}
+@endsection
 @section('kotakcari')
   <li class="nav-item" >
     <form class="form" action="{{ route('cari') }}" method="post">
@@ -13,12 +16,17 @@
 @section('content')
   <div class="row" >
     <div class="col-md-12">
-      <p class="text-left">Menampilkan padanan untuk kata: <i>{{ $lema }}</i></p>
-      <hr>
+      <h5 class="text-left">Menampilkan padanan untuk kata: <i>{{ $lema }}</i></h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{-- <hr> --}}
         @if (count($padanan) == 0)
             <div class="text-center" style="color:red">
-              Padanan Kata/Istilah tidak ditemukan. :"(<br>
+              <p>Padanan Kata/Istilah tidak ditemukan. :"(<br>
               <a class="btn btn-primary" href="https://goo.gl/forms/ImukgcQcGzdqx8SC2">Usulkan Kata/Isitlah</a>
+            </p>
             </div>
         @else
         <table class="table table-borderless">
