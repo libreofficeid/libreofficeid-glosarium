@@ -25,7 +25,7 @@
         @if (count($padanan) == 0)
             <div class="text-center" style="color:red">
               <p>Padanan Kata/Istilah tidak ditemukan. :"(<br>
-              <a class="btn btn-primary" href="https://goo.gl/forms/ImukgcQcGzdqx8SC2">Usulkan Kata/Isitlah</a>
+              <a class="btn btn-primary" href="https://goo.gl/forms/ImukgcQcGzdqx8SC2">Usulkan Kata/Istilah</a>
             </p>
             </div>
         @else
