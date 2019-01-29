@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    Daftar Kata/Padanan
+@endsection
 @section('kotakcari')
   <li class="nav-item">
     <form class="form" action="{{ route('cari') }}" method="post">
@@ -18,15 +21,15 @@
                         $alphas = range('A', 'Z');
                     @endphp
                     @foreach ($alphas as $kar)
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="filter()" data-karakter="{{ $kar }}">{{ $kar }}</a></li>
+                        <li class="nav-item"><a class="nav-link text-primary navigasi" onclick="filter(this)" data-karakter="{{ $kar }}">{{ $kar }}</a></li>
                     @endforeach
-
+                    <li class="nav-item"><a class="nav-link text-primary navigasi"  onclick="filter(this)" data-karakter="semua">#</a></li>
                 </ul>
         </div>
     </div>
     <hr>
     @foreach ($alphas as $karakter)
-    <div class="row">
+    <div class="row characters" id="{{ $karakter }}">
         <div class="col-md-4 text-center my-auto">
             {{ $karakter }}
         </div>
@@ -34,12 +37,13 @@
             <ul class="nav">
                     @foreach ($list_kata as $kata)
                     @if (strtolower($kata->source[0]) == strtolower($karakter))
-                        <li class="nav-item"><a class="nav-link" href="{{ route('glosarium.show',$kata->id) }}" >{{ $kata->source }}</a></li>
+                        <li class="nav-item"><a class="nav-link text-primary" href="{{ route('glosarium.show',$kata->id) }}" >{{ $kata->source }}</a></li>
                     @endif
                     @endforeach
             </ul>
         </div>
     </div>
-    <hr>
+    <hr class="characters">
     @endforeach
+    <script src="{{ asset('js/filter.js') }}"></script>
 @endsection
