@@ -15,9 +15,9 @@
 <div class="row">
     <div class="col-10">
             <h4 class="text-primary text-bold">Kontributor Glosarium LibreOffice.ID </h4>
-            <p class="text-primary">
-               - <a href="https://t.me/artemtech">Sofyan Sugianto (Pengembang)</a><br>
-               - <a href="https://t.me/raniaamina">Rania Amina (Desainer)</a>
+            <p>
+               - <a class="text-primary" href="https://t.me/artemtech">Sofyan Sugianto (Pengembang)</a><br>
+               - <a class="text-primary" href="https://t.me/raniaamina">Rania Amina (Desainer)</a>
             </p>
     </div>
 </div>

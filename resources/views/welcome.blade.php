@@ -15,6 +15,9 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/now-ui-kit.css?v=1.2.0') }}" rel="stylesheet" />
   <style>
+    .sidebar-collapse .navbar-collapse::before{
+        background: linear-gradient(green 0%, #000 80%);
+      }
   .login-page .page-header::before{
     background-color: rgba(0,0,0,0.1);
   }
