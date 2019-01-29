@@ -23,7 +23,8 @@ class GlosariumController extends Controller
     public function search(Request $request)
     {
         $lema = $request->input('lema');
-        $padanan = \DB::table('glosarium')->where('source', 'REGEXP', "([[:<:]]|^)".$lema."([[:>:]]|$)" )->orderBy('source','asc')->paginate();
+        // $padanan = \DB::table('glosarium')->where('source', 'REGEXP', "([[:<:]]|^)".$lema."([[:>:]]|$)" )->orderBy('source','asc')->paginate();
+        $padanan = \DB::table('glosarium')->where('source', 'LIKE', $lema."%" )->orderBy('source','asc')->paginate();
         return view('glosarium.search', compact('padanan', 'lema'));
     }
 
