@@ -21,15 +21,22 @@
     <link href="{{ asset('css/now-ui-kit.css') }}" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <style>
-        .toast-top-right{
+      .sidebar-collapse .navbar-collapse::before{
+        background: linear-gradient(green 0%, #000 80%);
+      }
+    .toast-top-right{
       top: 100px
     }
     .navbar .form-control,.navbar .form-control::placeholder,.navbar .input-group-text {
       color: white !important
     }
-    /* .text-primary, .text-primary a,{
+    .text-primary, a.nav-link.text-primary{
       color: #17a204 !important;
-    } */
+    }
+    a.nav-link.text-primary:hover, a.nav-link.text-primary.active{
+      color: #fff !important;
+      background-color: #17a204 !important;
+    }
     .bg-primary, .btn-primary, thead .bg-primary {
       background-color: #17a204 !important
     }
