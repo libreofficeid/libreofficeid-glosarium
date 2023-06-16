@@ -25,7 +25,7 @@
                                 <input class="btn btn-primary" type="submit" name="submit" value="Upload CSV">
                             </div>
                             <div class="col-md-6">
-                                <button class="btn btn-primary modalMd" type="button" value="{{ action('GlosariumController@create') }}" title="Padanan Kata Baru" data-toggle="modal" data-target="#modalMd">Tambah</button>
+                                <button class="btn btn-primary modalMd" type="button" value="{{ action('\App\Http\Controllers\GlosariumController@create') }}" title="Padanan Kata Baru" data-toggle="modal" data-target="#modalMd">Tambah</button>
                             </div>
                         </div>
                     </form>
@@ -36,6 +36,15 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <ul class="nav">
+                    @php
+                        $alphas = range('A', 'Z');
+                    @endphp
+                    @foreach ($alphas as $kar)
+                        <li class="nav-item"><a class="nav-link text-primary navigasi" onclick="filter(this)" data-karakter="{{ $kar }}">{{ $kar }}</a></li>
+                    @endforeach
+                    <li class="nav-item"><a class="nav-link text-primary navigasi"  onclick="filter(this)" data-karakter="semua">Semua</a></li>
+            </ul>
             <table class="table table-hover">
                 <thead class="thead-dark bg-primary">
                     <tr>
@@ -50,13 +59,16 @@
                         $i = 1
                     @endphp
                     @foreach ($list_kata as $kata)
-                        <tr>
+                        @php
+                            $firstAlpha = substr($kata->source, 0,1)
+                        @endphp
+                        <tr class="characters {{$firstAlpha}}">
                             <td>{{ $i }}</td>
                             <td>{{ $kata->source }}</td>
                             <td>{{ $kata->translated }}</td>
                             <td class="td-actions">
-                                <button href="#" title="Edit Data" data-toggle="modal" data-target="#modalMd" value="{{ action('GlosariumController@edit',['id'=>$kata->id]) }}" class="btn btn-sm btn-success modalMd"><i class="now-ui-icons ui-2_settings-90"></i></button>
-                                <form action="{{ action('GlosariumController@destroy',['id'=>$kata->id]) }}" method="POST">
+                                <button href="#" title="Edit Data" data-toggle="modal" data-target="#modalMd" value="{{ action('\App\Http\Controllers\GlosariumController@edit',['glosarium'=>$kata->id]) }}" class="btn btn-sm btn-success modalMd"><i class="now-ui-icons ui-2_settings-90"></i></button>
+                                <form action="{{ action('\App\Http\Controllers\GlosariumController@destroy',['glosarium'=>$kata->id]) }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-sm btn-danger" title="Delete InspTemuanItem" onclick="return confirm('Confirm delete?')" type="submit">
@@ -75,3 +87,5 @@
     </div>
 </div>
 @endsection
+
+<script src="{{ asset('js/filter.js') }}"></script>

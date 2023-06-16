@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Toastr;
-use App\Glosarium;
+use App\Models\Glosarium;
 use Auth;
 
 class GlosariumController extends Controller
@@ -24,7 +24,8 @@ class GlosariumController extends Controller
     {
         $lema = $request->input('lema');
         // $padanan = \DB::table('glosarium')->where('source', 'REGEXP', "([[:<:]]|^)".$lema."([[:>:]]|$)" )->orderBy('source','asc')->paginate();
-        $padanan = \DB::table('glosarium')->where('source', 'LIKE', $lema."%" )->orderBy('source','asc')->paginate();
+        $padanan = Glosarium::where('source','LIKE', $lema."%")->orderBy('source','asc')->paginate();
+        // $padanan = \DB::table('glosarium')->where('source', 'LIKE', $lema."%" )->orderBy('source','asc')->paginate();
         return view('glosarium.search', compact('padanan', 'lema'));
     }
 
@@ -80,7 +81,8 @@ class GlosariumController extends Controller
     public function show($id)
     {
         $lema = Glosarium::find($id)->source;
-        $padanan = \DB::table('glosarium')->where('source', 'REGEXP', "([[:<:]]|^)".$lema."([[:>:]]|$)" )->orderBy('source','asc')->paginate();;
+        $padanan = Glosarium::where('source','like','%'.$lema.'%')->orderBy('source','asc')->paginate();
+        // $padanan = \DB::table('glosarium')->where('source', 'REGEXP', "([[:<:]]|^)".$lema."([[:>:]]|$)" )->orderBy('source','asc')->paginate();
         return view('glosarium.search', compact('padanan', 'lema'));
     }
 

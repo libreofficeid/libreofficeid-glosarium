@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Glosarium;
+use App\Models\Glosarium;
 
 class HomeController extends Controller
 {

@@ -8,6 +8,7 @@ function filter(component){
     else{
         $(".characters").hide();
         $("#"+karakter).show();
+        $(".characters."+karakter).show();
         $(component).addClass('active');
     }
 }

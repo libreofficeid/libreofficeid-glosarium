@@ -23,7 +23,7 @@
                     @foreach ($alphas as $kar)
                         <li class="nav-item"><a class="nav-link text-primary navigasi" onclick="filter(this)" data-karakter="{{ $kar }}">{{ $kar }}</a></li>
                     @endforeach
-                    <li class="nav-item"><a class="nav-link text-primary navigasi"  onclick="filter(this)" data-karakter="semua">#</a></li>
+                    <li class="nav-item"><a class="nav-link text-primary navigasi"  onclick="filter(this)" data-karakter="semua">Semua</a></li>
                 </ul>
         </div>
     </div>

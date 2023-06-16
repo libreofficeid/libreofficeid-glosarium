@@ -104,7 +104,7 @@
       </div>
       <footer class="footer">
         <div class="container">
-          <div class="copyright">Komunitas <b>Libre</b>Office Indonesia</div>
+          <div class="copyright">Komunitas <b>LibreOffice Indonesia</div>
             <nav>
               <ul>
                 <li><a href="https://github.com/libreofficeid"><i class="fab fa-github"></i><span class="d-none d-lg-inline">&nbsp;&nbsp;@libreofficeid</span></a></li>
