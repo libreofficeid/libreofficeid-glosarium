@@ -1,0 +1,10 @@
+vendor
+node_modules
+storage/**/*.php
+storage/**/*.log
+html
+.composer
+.env
+public/js/app.js*
+public/mix-manifest.json
+.git*

@@ -1,0 +1,26 @@
+version: "3.5"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: loid-glosarium:test
+    environment:
+      CONTAINER_ROLE: webserver
+    networks:
+      - db 
+  db:
+    image: mariadb:10.5
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: 1
+      MARIADB_USER: loid
+      MARIADB_PASSWORD: loid23
+      MARIADB_DATABASE: loid
+    volumes:
+      - glosarium:/var/lib/mysql
+    networks:
+      - db
+volumes:
+  glosarium:
+networks:
+  db:
