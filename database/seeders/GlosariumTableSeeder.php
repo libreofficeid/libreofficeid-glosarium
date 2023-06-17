@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class GlosariumTableSeeder extends Seeder
@@ -11,7 +13,7 @@ class GlosariumTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Glosarium::class,1)->create()->each(function($p){
+        \App\Models\Glosarium::factory(1)->create()->each(function($p){
           $p->save();
         });
     }

@@ -1,30 +1,40 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-$factory->define(App\User::class, function (Faker $faker) {
-    return [
-        'name' => "Rania Amina",
-        'email' => "raniaamina@libreoffice.id",
-        'password' => '$2y$10$x.KmiP0ASPgQ6pWnTKWv3uSBGRcEbBg9frEPQrayRCXifr5uIyzX6', // secret
-        'remember_token' => str_random(10),
-    ];
-});
-$factory->define(App\Glosarium::class, function (Faker $faker){
-  return [
-    'source' => "paste",
-    'translated' => "rekat",
-    'created_by' => 1
-  ];
-});
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ */
+class UserFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'name' => "Rania Amina",
+            'email' => "raniaamina@libreoffice.id",
+            'email_verified_at' => now(),
+            'password' => '$2y$10$x.KmiP0ASPgQ6pWnTKWv3uSBGRcEbBg9frEPQrayRCXifr5uIyzX6', // password
+            'remember_token' => Str::random(10),
+        ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     *
+     * @return static
+     */
+    public function unverified()
+    {
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => null,
+        ]);
+    }
+}

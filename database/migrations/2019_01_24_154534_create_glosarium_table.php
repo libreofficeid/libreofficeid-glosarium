@@ -17,10 +17,9 @@ class CreateGlosariumTable extends Migration
             $table->increments('id');
             $table->string('source');
             $table->string('translated');
-            $table->unsignedInteger('created_by');
+            $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
 
-            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 
