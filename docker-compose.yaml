@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    image: loid-glosarium:v2.0
+    image: ghcr.io/libreofficeid/libreofficeid-glosarium/loid-glosarium:v2.0
     networks:
       - db 
   db:
