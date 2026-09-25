@@ -1,0 +1,6 @@
+{
+ "menu": [
+   {"name": "Tentang", "slug": "/tentang"},
+   {"name": "Usulkan Padanan Kata","slug": "https://goo.gl/forms/ImukgcQcGzdqx8SC2"}
+ ]
+}

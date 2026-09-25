@@ -1,0 +1,15 @@
+title: Glosarium LibreOffice Indonesia
+description: Glosarium tak resmi yang didedikasikan untuk para penerjemah LibreOffice Indonesia (GLO-ID)
+url: ""
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Exclude from processing
+exclude:
+  - .git
+  - Gemfile
+  - Gemfile.lock
+  - README.md

@@ -1,0 +1,169 @@
+---
+layout: default
+title: Beranda
+---
+
+<!-- Initial Welcome / Landing Section (Visible on initial load) -->
+<section class="welcome-card" id="welcomeSection">
+  <div class="welcome-badge">
+    <i class="fas fa-book-sparkles"></i> Glosarium Resmi Komunitas
+  </div>
+  <h1 class="welcome-title">Glosarium <span>LibreOffice</span> Indonesia</h1>
+  <p class="welcome-subtitle">
+    Dokumentasi resmi padanan kata dan istilah terjemahan antarmuka LibreOffice dalam Bahasa Indonesia.
+  </p>
+
+  <div class="welcome-actions">
+    <button type="button" class="btn-hero-primary" id="btnExploreGlossary">
+      <i class="fas fa-book-open"></i> Buka Daftar Kata / Padanan
+    </button>
+    <button type="button" class="btn-hero-outline" id="btnExploreAbout">
+      <i class="fas fa-circle-info"></i> Tentang Glosarium
+    </button>
+  </div>
+
+  <div class="welcome-hint">
+    <i class="fas fa-lightbulb"></i>
+    <span>Gunakan kolom pencarian di bagian atas atau tekan tombol <kbd>/</kbd> untuk mencari padanan kata secara instan.</span>
+  </div>
+</section>
+
+<!-- Glossary Entries Section (Hidden on initial load, shown when clicking Daftar Kata / searching / clicking letter) -->
+<section class="glossary-card" id="glosariumSection" style="display: none;">
+  <div class="glossary-section-header">
+    <div class="section-title-wrap">
+      <i class="fas fa-book-open text-primary"></i>
+      <h2 class="section-heading">Daftar Kata &amp; Padanan</h2>
+    </div>
+    <span id="resultsCount" class="badge-count">{{ site.data.glosarium.size }} padanan kata</span>
+  </div>
+
+  <!-- Grouped Alphabetical View -->
+  <div id="groupedView">
+    {% assign sorted_terms = site.data.glosarium | sort_natural: "Source" %}
+    {% assign alphabet_list = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," %}
+
+    {% for letter in alphabet_list %}
+      {% assign terms_in_letter = "" | split: "" %}
+      
+      <!-- Collect items for current letter -->
+      {% for item in sorted_terms %}
+        {% assign clean_source = item.Source | strip %}
+        {% assign first_char = clean_source | slice: 0, 1 | upcase %}
+        {% if first_char == letter %}
+          {% assign terms_in_letter = terms_in_letter | push: item %}
+        {% endif %}
+      {% endfor %}
+
+      {% if terms_in_letter.size > 0 %}
+        <div class="letter-group" id="letter-group-{{ letter }}" data-letter="{{ letter }}">
+          <div class="letter-group-inner">
+            <div class="letter-header">
+              <span class="letter-badge">{{ letter }}</span>
+              <span class="letter-count">{{ terms_in_letter.size }} kata</span>
+            </div>
+            <div class="letter-terms-list">
+              {% for term in terms_in_letter %}
+                {% assign term_source = term.Source | strip %}
+                {% assign term_padanan = term.Padanan | strip %}
+                <div 
+                  class="term-chip" 
+                  data-source="{{ term_source | escape }}" 
+                  data-padanan="{{ term_padanan | escape }}"
+                  title="Klik untuk detail atau salin padanan"
+                >
+                  <span class="source-text">{{ term_source }}</span>
+                  <span class="padanan-badge">{{ term_padanan }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Search Results Table View (Activated when searching) -->
+  <div id="searchResultsView" style="display: none;">
+    <div class="table-responsive">
+      <table class="glossary-table">
+        <thead>
+          <tr>
+            <th class="col-letter">#</th>
+            <th class="col-source">Kata Asal (English)</th>
+            <th class="col-padanan">Padanan (Bahasa Indonesia)</th>
+            <th class="col-action">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="searchTableBody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Empty Search State -->
+  <div id="emptyState" class="empty-state" style="display: none;">
+    <div class="empty-state-icon">
+      <i class="fas fa-magnifying-glass"></i>
+    </div>
+    <h4>Padanan kata tidak ditemukan</h4>
+    <p>Kata yang Anda cari belum ada di daftar glosarium kami.</p>
+    {% assign suggest_link = "https://goo.gl/forms/ImukgcQcGzdqx8SC2" %}
+    {% for item in site.data.menu.menu %}
+      {% if item.slug contains "http" %}
+        {% assign suggest_link = item.slug %}
+      {% endif %}
+    {% endfor %}
+    <a href="{{ suggest_link }}" target="_blank" rel="noopener noreferrer" class="btn-hero-primary" style="display: inline-flex; margin-top: 0.75rem;">
+      <i class="fas fa-plus-circle"></i> Usulkan Kata / Padanan Ini
+    </a>
+  </div>
+</section>
+
+<!-- Single Page: Tentang Section (Hidden on initial load, shown when clicking Tentang) -->
+<section class="about-card" id="tentangSection" style="display: none;">
+  <div class="about-header">
+    <i class="fas fa-circle-info"></i>
+    <h2>Tentang Glosarium LibreOffice.ID</h2>
+  </div>
+  
+  <div class="about-text">
+    <p>
+      <strong>Glosarium LibreOffice Indonesia (GLO-ID)</strong> merupakan repositori glosarium terbuka yang didedikasikan untuk para penerjemah dan kontributor lokalisasi LibreOffice Indonesia.
+    </p>
+    <p>
+      GLO-ID memuat dokumentasi kata dan istilah baku yang telah disepakati oleh para kontributor penerjemah pada kegiatan <em>Gotong Royong Penerjemahan</em>. Sistem ini dikelola secara terstruktur berbasis data CSV terbuka (<code>glosarium.csv</code>), sehingga pangkalan data dapat terus diperbarui, disempurnakan, dan dikembangkan secara kolaboratif bersama komunitas.
+    </p>
+    <p>
+      Kami berharap dengan adanya GLO-ID ini kualitas dan konsistensi terjemahan LibreOffice dalam Bahasa Indonesia dapat terus ditingkatkan, serta memotivasi rekan-rekan pegiat sumber terbuka untuk ikut berkontribusi dalam penerjemahan LibreOffice.
+    </p>
+  </div>
+
+  <div class="contributors-box">
+    <h4><i class="fas fa-users"></i> Kontributor Glosarium LibreOffice.ID</h4>
+    <ul class="contributors-list">
+      <li>
+        <span>&bull;</span>
+        <a href="https://t.me/artemtech" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-telegram"></i> Sofyan Sugianto
+        </a>
+        <span class="text-muted">(Pengembang)</span>
+      </li>
+      <li>
+        <span>&bull;</span>
+        <a href="https://t.me/raniaamina" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-telegram"></i> Rania Amina
+        </a>
+        <span class="text-muted">(Desainer)</span>
+      </li>
+      <li>
+        <span>&bull;</span>
+        <a href="https://t.me/LibreOfficeID" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-telegram"></i> Komunitas LibreOffice Indonesia
+        </a>
+        <span class="text-muted">(Penerjemah &amp; Pengulas)</span>
+      </li>
+    </ul>
+  </div>
+</section>

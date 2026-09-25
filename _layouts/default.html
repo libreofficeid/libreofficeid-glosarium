@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+
+  <!-- Fixed Top Header (Navbar + Search Bar + Alphabet Filter) -->
+  <header class="fixed-top-header" id="fixedHeader">
+    <!-- Navbar Row -->
+    <div class="site-navbar">
+      <div class="navbar-container">
+        <a class="brand-logo" href="{{ '/' | relative_url }}" id="navBrandLogo">
+          <img src="{{ '/assets/img/main-logo.png' | relative_url }}" alt="LibreOffice Indonesia Logo">
+        </a>
+
+        <!-- Desktop Navigation Menu from _data/menu.json -->
+        <nav aria-label="Navigasi Utama">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#glosarium" id="navLinkGlosarium">
+                <i class="fas fa-book-open"></i> Daftar Kata/Padanan
+              </a>
+            </li>
+            {% if site.data.menu.menu %}
+              {% for item in site.data.menu.menu %}
+                <li class="nav-item">
+                  {% if item.slug contains "http://" or item.slug contains "https://" %}
+                    <a class="nav-link nav-btn-highlight" href="{{ item.slug }}" target="_blank" rel="noopener noreferrer">
+                      <i class="fas fa-paper-plane"></i> {{ item.name }}
+                    </a>
+                  {% elsif item.slug == "/tentang" or item.slug == "#tentang" %}
+                    <a class="nav-link" href="#tentang" id="navLinkTentang">
+                      <i class="fas fa-circle-info"></i> {{ item.name }}
+                    </a>
+                  {% else %}
+                    <a class="nav-link" href="{{ item.slug | relative_url }}">
+                      {{ item.name }}
+                    </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </nav>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="navbar-toggler" id="mobileNavToggle" type="button" aria-label="Buka Menu Navigasi">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Fixed Search & Alphabet Section -->
+    <div class="header-search-section">
+      <div class="header-search-container">
+        <!-- Search Input -->
+        <div class="search-input-wrapper">
+          <i class="fas fa-magnifying-glass search-icon"></i>
+          <input
+            type="search"
+            id="searchGlossary"
+            class="search-input"
+            placeholder="Cari padanan kata... (Tekan '/' untuk mencari)"
+            autocomplete="off"
+            aria-label="Cari Padanan Kata"
+          >
+          <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="Bersihkan pencarian">
+            <i class="fas fa-circle-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Alphabet Quick Filter -->
+        <nav class="header-alphabet-nav" aria-label="Filter Abjad">
+          <ul class="alphabet-list" id="alphabetNav">
+            <li><button type="button" class="alpha-btn" data-letter="SEMUA">Semua</button></li>
+            {% assign alphabet_chars = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," %}
+            {% for char in alphabet_chars %}
+              <li><button type="button" class="alpha-btn" data-letter="{{ char }}">{{ char }}</button></li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu from _data/menu.json -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Menu Mobile">
+    <div class="mobile-drawer-header">
+      <button class="mobile-drawer-close" id="mobileNavClose" aria-label="Tutup Menu">&times;</button>
+      <img src="{{ '/assets/img/main-logo.png' | relative_url }}" alt="LibreOffice Indonesia Logo" height="36">
+    </div>
+    <ul class="mobile-nav-links">
+      <li>
+        <a class="nav-link" href="#glosarium" id="mobileLinkGlosarium">
+          <i class="fas fa-book-open"></i> Daftar Kata/Padanan
+        </a>
+      </li>
+      {% if site.data.menu.menu %}
+        {% for item in site.data.menu.menu %}
+          <li>
+            {% if item.slug contains "http://" or item.slug contains "https://" %}
+              <a class="nav-link nav-btn-highlight" href="{{ item.slug }}" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-paper-plane"></i> {{ item.name }}
+              </a>
+            {% elsif item.slug == "/tentang" or item.slug == "#tentang" %}
+              <a class="nav-link" href="#tentang" id="mobileLinkTentang">
+                <i class="fas fa-circle-info"></i> {{ item.name }}
+              </a>
+            {% else %}
+              <a class="nav-link" href="{{ item.slug | relative_url }}">
+                {{ item.name }}
+              </a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper" id="main-content">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-copyright">
+        Komunitas <strong>LibreOffice</strong> Indonesia &bull; Glosarium Terbuka
+      </div>
+      <nav aria-label="Tautan Komunitas">
+        <ul class="footer-social-links">
+          <li>
+            <a href="https://github.com/libreofficeid" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-github"></i> <span class="d-none d-lg-inline">@libreofficeid</span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:humas@libreoffice.id">
+              <i class="fa fa-envelope"></i> <span class="d-none d-lg-inline">humas@libreoffice.id</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/libreofficeid" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-twitter"></i> <span class="d-none d-lg-inline">@LibreOfficeID</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/LibreOfficeID" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-telegram-plane"></i> <span class="d-none d-lg-inline">@LibreOfficeID</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Term Details Modal -->
+  <div class="modal-overlay" id="termModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modalTitle"><i class="fas fa-book-bookmark"></i> Detail Padanan</h3>
+        <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-term-details">
+          <div class="modal-detail-item">
+            <div class="modal-detail-label">Kata Asal (English)</div>
+            <div class="modal-detail-value" id="modalSource">-</div>
+          </div>
+          <div class="modal-detail-item">
+            <div class="modal-detail-label">Padanan (Bahasa Indonesia)</div>
+            <div class="modal-detail-value primary-val" id="modalPadanan">-</div>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn-copy" id="modalCopyBtn" style="padding: 0.6rem 1rem; font-weight: 600;">
+            <i class="far fa-copy"></i> Salin Padanan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Embed Glossary Data for instant client-side search & filtering -->
+  <script>
+    window.__GLOSARIUM_DATA__ = [
+      {% for item in site.data.glosarium %}
+        {
+          "Source": {{ item.Source | strip | jsonify }},
+          "Padanan": {{ item.Padanan | strip | jsonify }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ];
+  </script>
+
+  <!-- Main JavaScript -->
+  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>
